@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { HealthSnapshot } from '../../../domain/health/health.model';
 
-export class HealthResponseDto {
+export class HealthResponseDto implements HealthSnapshot {
   @ApiProperty({ example: 'ok' })
   status!: 'ok';
 

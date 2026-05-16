@@ -17,6 +17,6 @@ export class HealthController {
   @Get()
   @ApiOkResponse({ type: HealthResponseDto })
   async getHealth(): Promise<HealthResponseDto> {
-    return this.healthCheckPort.execute();
+    return await this.healthCheckPort.execute();
   }
 }
