@@ -5,6 +5,7 @@ import {
   HealthCheckPort,
 } from '../../../application/ports/health-check.port';
 import { HealthResponseDto } from './health.response.dto';
+import { Public } from '../auth/public.decorator';
 
 @ApiTags('health')
 @Controller('health')
@@ -14,6 +15,7 @@ export class HealthController {
     private readonly healthCheckPort: HealthCheckPort,
   ) {}
 
+  @Public()
   @Get()
   @ApiOkResponse({ type: HealthResponseDto })
   async getHealth(): Promise<HealthResponseDto> {

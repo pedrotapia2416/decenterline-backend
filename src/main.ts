@@ -14,7 +14,17 @@ async function bootstrap() {
     .setTitle('Decenterline Backend')
     .setDescription('Backend API for Decenterline')
     .setVersion('1.0.0')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        description: 'Token returned by POST /auth/login',
+      },
+      'access-token',
+    )
     .addTag('health')
+    .addTag('auth')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
