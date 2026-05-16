@@ -18,8 +18,8 @@ export class LoginUseCase {
     private readonly authConfig: AuthConfigPort,
   ) {}
 
-  execute(input: { username: string; password: string }): AuthSession | null {
-    const principal = this.credentialStore.validate(input.username, input.password);
+  async execute(input: { username: string; password: string }): Promise<AuthSession | null> {
+    const principal = await this.credentialStore.validate(input.username, input.password);
 
     if (!principal) {
       return null;

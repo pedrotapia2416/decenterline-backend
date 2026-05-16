@@ -16,8 +16,8 @@ export class AuthController {
   @Post('login')
   @ApiOkResponse({ type: AuthSessionResponseDto })
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
-  login(@Body() body: LoginRequestDto): AuthSessionResponseDto {
-    const session = this.loginUseCase.execute({
+  async login(@Body() body: LoginRequestDto): Promise<AuthSessionResponseDto> {
+    const session = await this.loginUseCase.execute({
       username: body.username,
       password: body.password,
     });

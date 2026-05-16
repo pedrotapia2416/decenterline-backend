@@ -4,24 +4,26 @@ import { AUTH_CONFIG_PORT } from '../../../application/ports/auth-config.port';
 import { CREDENTIAL_STORE_PORT } from '../../../application/ports/credential-store.port';
 import { TOKEN_SERVICE_PORT } from '../../../application/ports/token-service.port';
 import { LoginUseCase } from '../../../application/use-cases/login.use-case';
-import { EnvAuthConfigService } from '../../../infrastructure/auth/env-auth-config.service';
-import { EnvCredentialStoreService } from '../../../infrastructure/auth/env-credential-store.service';
+import { MongoCredentialStoreService } from '../../../infrastructure/auth/mongo-credential-store.service';
+import { EnvTokenConfigService } from '../../../infrastructure/auth/env-token-config.service';
 import { HmacTokenService } from '../../../infrastructure/auth/hmac-token.service';
+import { MongoModule } from '../../../infrastructure/mongo/mongo.module';
 import { AuthController } from './auth.controller';
 import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Module({
+  imports: [MongoModule],
   controllers: [AuthController],
   providers: [
     LoginUseCase,
     JwtAuthGuard,
     {
       provide: AUTH_CONFIG_PORT,
-      useClass: EnvAuthConfigService,
+      useClass: EnvTokenConfigService,
     },
     {
       provide: CREDENTIAL_STORE_PORT,
-      useClass: EnvCredentialStoreService,
+      useClass: MongoCredentialStoreService,
     },
     {
       provide: TOKEN_SERVICE_PORT,
@@ -32,6 +34,6 @@ import { JwtAuthGuard } from './jwt-auth.guard';
       useClass: JwtAuthGuard,
     },
   ],
-  exports: [AUTH_CONFIG_PORT, TOKEN_SERVICE_PORT],
+  exports: [AUTH_CONFIG_PORT, TOKEN_SERVICE_PORT, CREDENTIAL_STORE_PORT],
 })
 export class AuthModule {}

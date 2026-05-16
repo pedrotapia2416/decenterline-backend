@@ -28,7 +28,10 @@ La carpeta del front permanece desacoplada en `decenterline-web`.
 
 ## Variables de entorno
 
-- `AUTH_USERNAME`: usuario permitido para login.
-- `AUTH_PASSWORD`: contraseña permitida para login.
-- `AUTH_TOKEN_SECRET`: secreto para firmar tokens.
+- `MONGO_URI`: cadena de conexión a MongoDB Atlas.
+- `MONGO_DB_NAME`: nombre de la base de datos a usar.
+- `AUTH_BOOTSTRAP_USERNAME`: usuario inicial que se crea en MongoDB si no existe.
+- `AUTH_BOOTSTRAP_PASSWORD`: contraseña del usuario inicial.
+- `AUTH_BOOTSTRAP_ROLES`: roles iniciales del usuario, separados por coma.
+- `AUTH_TOKEN_SECRET`: secreto para firmar tokens JWT.
 - `AUTH_TOKEN_TTL_SECONDS`: duración del token en segundos.
