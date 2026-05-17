@@ -1,4 +1,5 @@
 import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
+import { MongoService } from './mongo.service';
 import { MongoRoleRepository } from './mongo-role.repository';
 import { MongoUserRepository } from './mongo-user.repository';
 import { ScryptPasswordHasherService } from './scrypt-password-hasher.service';
@@ -6,14 +7,24 @@ import { ScryptPasswordHasherService } from './scrypt-password-hasher.service';
 @Injectable()
 export class MongoBootstrapService implements OnApplicationBootstrap {
   constructor(
+    private readonly mongoService: MongoService,
     private readonly roleRepository: MongoRoleRepository,
     private readonly userRepository: MongoUserRepository,
     private readonly passwordHasher: ScryptPasswordHasherService,
   ) {}
 
   async onApplicationBootstrap(): Promise<void> {
+    await this.ensureIndexes();
     await this.ensureRoles();
     await this.ensureBootstrapUser();
+  }
+
+  private async ensureIndexes(): Promise<void> {
+    const db = this.mongoService.getDb();
+    await Promise.all([
+      db.collection('users').createIndex({ username: 1 }, { unique: true }),
+      db.collection('roles').createIndex({ name: 1 }, { unique: true }),
+    ]);
   }
 
   private async ensureRoles(): Promise<void> {

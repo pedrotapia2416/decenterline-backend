@@ -12,7 +12,17 @@ Backend separado para Decenterline, construido con NestJS, Swagger y una base de
 
 - `GET /health`
 - `POST /auth/login`
+- `POST /auth/register`
 - `GET /auth/me`
+- `GET /users/me`
+- `GET /users`
+- `POST /users`
+- `PATCH /users/:username`
+- `DELETE /users/:username`
+- `GET /roles`
+- `POST /roles`
+- `PATCH /roles/:name`
+- `DELETE /roles/:name`
 - Swagger disponible en `GET /docs`
 
 ## Arranque
