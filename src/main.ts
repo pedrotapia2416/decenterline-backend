@@ -3,7 +3,13 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  process.loadEnvFile?.();
+  try {
+    process.loadEnvFile?.();
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== 'ENOENT') {
+      throw error;
+    }
+  }
 
   const app = await NestFactory.create(AppModule);
 
